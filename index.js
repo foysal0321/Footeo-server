@@ -20,8 +20,9 @@ async function run(){
     try{
         app.get('/services',async (req,res)=>{
             const query = {};
-            const cursor = servicesCollection.find(query);
-            const result = await cursor.limit(3).toArray();
+            let cursor = servicesCollection.find(query);
+            let result = await cursor.limit(3).toArray();
+            result.reverse()
             res.send(result)
         })
         app.get('/allservices',async (req,res)=>{
@@ -38,7 +39,7 @@ async function run(){
             res.send(result)
         })
 
-        app.post('/allservices', async(req,res)=>{
+        app.post('/services', async(req,res)=>{
             const user = req.body;
             const result = await servicesCollection.insertOne(user);
             res.send(result)
