@@ -38,6 +38,12 @@ async function run(){
             res.send(result)
         })
 
+        app.post('/allservices', async(req,res)=>{
+            const user = req.body;
+            const result = await servicesCollection.insertOne(user);
+            res.send(result)
+        })
+
         app.post('/review',async(req,res)=>{
             const user = req.body;
             const result = await reviewCollecton.insertOne(user);
