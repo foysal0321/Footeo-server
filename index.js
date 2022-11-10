@@ -68,18 +68,18 @@ async function run(){
         })
 
         //send reviews
-        app.post('/review',verifyJwt, async(req,res)=>{
+        app.post('/review', async(req,res)=>{
             const user = req.body;
             const result = await reviewCollecton.insertOne(user);
             res.send(result)
         })
 
         //read review
-        app.get('/review',verifyJwt, async (req,res)=>{
-            const decode = req.decoded;
-            if(decode.email !== req.query.email){
-                res.status(403).send({message: 'Unauthorization access'}); 
-            }
+        app.get('/review', async (req,res)=>{
+            // const decode = req.decoded;
+            // if(decode.email !== req.query.email){
+            //     res.status(403).send({message: 'Unauthorization access'}); 
+            // }
             let query = {};
             if(req.query.email){
                 query = {
@@ -93,7 +93,7 @@ async function run(){
         })
 
         //delete review
-        app.delete('/review/:id',verifyJwt, async(req,res)=>{
+        app.delete('/review/:id', async(req,res)=>{
             const ids = req.params.id;
             const query = {_id: ObjectId(ids)};
             const result = await reviewCollecton.deleteOne(query);
@@ -101,7 +101,7 @@ async function run(){
         })
 
         //update review
-        app.put('/review/:id',verifyJwt, async (req,res)=>{
+        app.put('/review/:id', async (req,res)=>{
             const ids = req.params.id;
             const query = {_id: ObjectId(ids)};
             const user = req.user;
@@ -120,7 +120,7 @@ async function run(){
             //console.log(result);
         })
 
-        app.get('/review/:id',verifyJwt, async(req,res)=>{
+        app.get('/review/:id', async(req,res)=>{
             const ids = req.params.id;
             const query = {_id: ObjectId(ids)};
             const result = await reviewCollecton.findOne(query);
