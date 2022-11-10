@@ -68,7 +68,7 @@ async function run(){
         })
 
         //send reviews
-        app.post('/review', verifyJwt, async(req,res)=>{
+        app.post('/review',verifyJwt, async(req,res)=>{
             const user = req.body;
             const result = await reviewCollecton.insertOne(user);
             res.send(result)
@@ -93,7 +93,7 @@ async function run(){
         })
 
         //delete review
-        app.delete('/review/:id', verifyJwt, async(req,res)=>{
+        app.delete('/review/:id',verifyJwt, async(req,res)=>{
             const ids = req.params.id;
             const query = {_id: ObjectId(ids)};
             const result = await reviewCollecton.deleteOne(query);
@@ -111,11 +111,21 @@ async function run(){
                     // title: user.title,
                     // rating: user.rating,
                     // img: user.img,
-                    description: user.description
+                    message: user.email,
+                
                 }
-            }
+            }                   
             const result = await reviewCollecton.updateOne(query,updateDoc, options);
             res.send(result)
+            //console.log(result);
+        })
+
+        app.get('/review/:id',verifyJwt, async(req,res)=>{
+            const ids = req.params.id;
+            const query = {_id: ObjectId(ids)};
+            const result = await reviewCollecton.findOne(query);
+            res.send(result)
+            //console.log(req.params);
         })
 
         //jwt token
